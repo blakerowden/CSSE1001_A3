@@ -9,133 +9,80 @@ import tkinter as tk
 __author__ = "Blake Rowden s4427634"
 
 
-class Header(tk.Frame):
-    def __init__(self, master):
+class TopHeader(tk.Frame):
+
+    def __init__(self, master, **kwargs):
         super().__init__(master)
         self._master = master
+        self._frame = tk.Frame(self._master, bg=kwargs['bg'])
+        self._frame.pack(fill=tk.X)
+        self._title = tk.Label(self._frame, text=kwargs['title'],
+                               font=("Helvetica Neue", int(kwargs['fontsize']*1.3), "bold"),
+                               fg=kwargs['fg'], bg=kwargs['bg'])
+        self._title.pack(anchor=tk.W, padx=13, pady=(20, 5))
 
-        # Notice
-        self._noticeframe = tk.Frame(self._master, bg="#fefcec")
-        self._noticeframe.pack(fill=tk.X)
-        self._nflabel1 = tk.Label(self._noticeframe, text="Important",
-                                  font=("Helvetica Neue", 18, "bold"),
-                                  fg="#C09853", bg="#FEFBED")
-        self._nflabel1.pack(anchor=tk.W, padx=13, pady=(14, 0))
-        self._nflabel2 = tk.Label(self._noticeframe, text=("Individual assessment items must be solely your own work. "
-                                                           "While students are encouraged to have high-level "
-                                                           "conversations about the problems they are "
-                                                           "trying to solve, you must not look at another student’s "
-                                                           "code or copy from it. The university uses sophisticated "
-                                                           "anti-collusion measures to automatically "
-                                                           "detect similarity between assignment submissions."),
-                                  font=("sans-serif", 14,),
-                                  bg="#FEFBED",
-                                  justify=tk.LEFT,
-                                  wraplength=1300)
-        self._nflabel2.pack(anchor=tk.W, padx=13, pady=(0, 15))
-
-        # Question Container
-        self._questioncontainer = tk.Frame(self._master)
-        self._questioncontainer.pack(expand=1, fill=tk.BOTH)
-
-        # Quick Question Frame
-        self._quickquestionframe = tk.Frame(self._questioncontainer)
-        self._quickquestionframe.pack(side=tk.LEFT, expand=1, fill=tk.BOTH)
-
-        # Quick Question Title Frame
-        self._qqframe1 = tk.Frame(self._quickquestionframe, bg="#dff0d8", highlightbackground="#d6e9c6",
-                                  highlightcolor="#d6e9c6",
-                                  highlightthickness=1,
-                                  bd=0)
-        self._qqframe1.pack(ipadx=150, pady=20)
-        self._qqlabel1 = tk.Label(self._qqframe1, text="Quick Questions", font=("Helvetica Neue", 25, "bold"),
-                                  bg="#dff0d8",
-                                  fg="#3c763d")
-        self._qqlabel1.pack(pady=5)
-        self._qqlabel2 = tk.Label(self._qqframe1, text="< 2 mins with a tutor", font=("Helvetica Neue", 10, "bold"),
-                                  bg="#dff0d8",
-                                  fg="#666")
-        self._qqlabel2.pack(pady=(30, 5))
-
-        # Description
-        self._qqlabel3 = (tk.Label(self._quickquestionframe, text="Some examples of quick questions:\n"
-                                                                  "  \u2022 Syntax errors\n"
-                                                                  "  \u2022 Interpreting error output\n"
-                                                                  "  \u2022 Assignment/MyPyTutor interpretation\n"
-                                                                  "  \u2022 MyPyTutor submission issues",
-                                   font=("Arial", 10),
-                                   justify=tk.LEFT))
-        self._qqlabel3.pack(anchor=tk.W, padx=(50, 0))
-
-        # Button Border
-        self._qqbuttonborder = tk.Frame(self._quickquestionframe,
-                                        highlightbackground="#4cae4c",
-                                        highlightcolor="#4cae4c",
-                                        highlightthickness=3,
-                                        bd=0)
-        self._qqbuttonborder.pack(pady=50)
-        # Button
-        self._qqbutton = tk.Button(self._qqbuttonborder,
-                                   text="Request Quick Help",
-                                   font=("Arial", 11),
-                                   bg="#5cb85c", fg="#fff",
-                                   relief=tk.FLAT)
-        self._qqbutton.pack()
-
-        # Long Question Frame
-        self._longquestionframe = tk.Frame(self._questioncontainer)
-        self._longquestionframe.pack(side=tk.RIGHT, expand=1, fill=tk.BOTH)
-
-        # Long Question Title Frame
-        self._lqframe1 = tk.Frame(self._longquestionframe, bg="#d9edf7", highlightbackground="#bce8f1",
-                                  highlightcolor="#bce8f1",
-                                  highlightthickness=1,
-                                  bd=0)
-        self._lqframe1.pack(ipadx=150, pady=20)
-        self._lqlabel1 = tk.Label(self._lqframe1, text="Long Questions", font=("Helvetica Neue", 25, "bold"),
-                                  bg="#d9edf7",
-                                  fg="#31708f")
-        self._lqlabel1.pack(pady=5)
-        self._lqlabel2 = tk.Label(self._lqframe1, text="> 2 mins with a tutor", font=("Helvetica Neue", 10, "bold"),
-                                  bg="#d9edf7",
-                                  fg="#666")
-        self._lqlabel2.pack(pady=(30, 5))
-
-        # Description
-        self._lqlabel3 = (tk.Label(self._longquestionframe, text="Some examples of long questions:\n"
-                                                                 "  \u2022 Open ended questions\n"
-                                                                 "  \u2022 to start a problem\n"
-                                                                 "  \u2022 How to improve code\n"
-                                                                 "  \u2022 Debugging\n"
-                                                                 "  \u2022 Assignment help",
-                                   font=("Arial", 10),
-                                   justify=tk.LEFT))
-        self._lqlabel3.pack(anchor=tk.W, padx=(50, 0))
-
-        #Button Border
-        self._lqbuttonborder = tk.Frame(self._longquestionframe,
-                                        highlightbackground="#46b8da",
-                                        highlightcolor="#46b8da",
-                                        highlightthickness=3,
-                                        bd=0)
-        self._lqbuttonborder.pack(pady=50)
-        #Button
-        self._lqbutton = tk.Button(self._lqbuttonborder,
-                                   text="Request Long Help",
-                                   font=("Arial", 11),
-                                   bg="#5bc0de", fg="#fff",
-                                   relief=tk.FLAT)
-        self._lqbutton.pack()
+        self._body = (tk.Text(self._frame,
+                              font=("sans-serif", kwargs['fontsize']),
+                              spacing1=1,
+                              relief=tk.FLAT,
+                              height=4,
+                              wrap=tk.WORD,
+                              bg=kwargs["bg"]
+                              ))
+        self._body.insert(tk.INSERT, kwargs["text"])
+        self._body.pack(anchor=tk.W, padx=13, expand=1, fill=tk.X)
+        self._body.config(state=tk.DISABLED)
 
 
-class QuickQuestionQueue(tk.Frame):
-    def __init__(self, master):
+class RequestPanel(tk.Frame):
+    def __init__(self, master, **kwargs):
         super().__init__(master)
+        self._master = master
+        self._frame = tk.Frame(self._master, bg="#fff")
+        self._frame.pack(side=tk.LEFT, expand=1, fill=tk.X, padx=20, anchor=tk.N)
 
+        self._mainheader = tk.Frame(self._frame,
+                                    bg=kwargs["titlebg"],
+                                    highlightbackground=kwargs["titleborder"],
+                                    highlightcolor=kwargs["titleborder"],
+                                    highlightthickness=1,
+                                    bd=0)
+        self._mainheader.pack(pady=20, fill=tk.X, expand=1)
+        self._title = tk.Label(self._mainheader,
+                               text=kwargs["title"],
+                               font=("Helvetica Neue", 18, "bold"),
+                               bg=kwargs["titlebg"],
+                               fg=kwargs["titlefg"])
+        self._title.pack(pady=5)
+        self._tuttime = tk.Label(self._mainheader,
+                                 text=kwargs["tuttime"],
+                                 font=("Helvetica Neue", 10, "bold"),
+                                 bg=kwargs["titlebg"],
+                                 fg="#666")
+        self._tuttime.pack(pady=(20, 5))
 
-class LongQuestionQueue(tk.Frame):
-    def __init__(self, master):
-        super().__init__(master)
+        self._examples = (tk.Text(self._frame,
+                                  font=("Arial", 10),
+                                  spacing1=6,
+                                  relief=tk.FLAT,
+                                  width=60,
+                                  height=5,))
+        self._examples.insert(tk.INSERT, kwargs["exampletext"])
+        self._examples.pack(anchor=tk.W)
+        self._examples.config(state=tk.DISABLED)
+
+        self._reqbutborder = tk.Frame(self._frame,
+                                      highlightbackground=kwargs["reqbuttonborder"],
+                                      highlightcolor=kwargs["reqbuttonborder"],
+                                      highlightthickness=3,
+                                      bd=0)
+        self._reqbutborder.pack(pady=30, anchor=tk.CENTER,)
+        self._requestbutton = tk.Button(self._reqbutborder,
+                                        text=kwargs["reqbuttontxt"],
+                                        font=("Arial", 10),
+                                        bg=kwargs["reqbuttonbg"], fg="#fff",
+                                        relief=tk.FLAT)
+        self._requestbutton.pack()
 
 
 class MainApplication(object):
@@ -143,20 +90,59 @@ class MainApplication(object):
     def __init__(self, master):
         self._master = master
         self._master.title("CSSE 1001 Queue")
-        self._master.minsize(1322, 579)
+        self._master.minsize()
+        self._topheader = TopHeader(self._master,
+                                    bg="#FEFBED",
+                                    fg="#C09853",
+                                    title="Important",
+                                    fontsize=10,
+                                    text="Individual assessment items must be solely your own work. "
+                                         "While students are encouraged to have high-level "
+                                         "conversations about the problems they are "
+                                         "trying to solve, you must not look at another student’s "
+                                         "code or copy from it. The university uses sophisticated "
+                                         "anti-collusion measures to automatically "
+                                         "detect similarity between assignment submissions.")
+        self._topheader.pack()
 
-        self._header = Header(self._master)
-        self._header.pack(fill=tk.X)
-
-        self._mainwindow = tk.Frame(self._master)
-        self._mainwindow.pack(fill=tk.BOTH, expand=1, pady=15)
-        self._quickquestions = QuickQuestionQueue(self._mainwindow)
-        self._quickquestions.pack(side=tk.LEFT, fill=tk.BOTH, expand=1, padx=5)
-        self._longquestions = LongQuestionQueue(self._mainwindow)
-        self._longquestions.pack(side=tk.RIGHT, fill=tk.BOTH, expand=1, padx=5)
+        self._mainscreen = tk.Frame(self._master, bg="#fff")
+        self._mainscreen.pack(expand=0, fill=tk.BOTH)
+        self._quickquestions = RequestPanel(self._mainscreen,
+                                            title="Quick Questions",
+                                            titlebg="#dff0d8",
+                                            titleborder="#d6e9c6",
+                                            titlefg="#3c763d",
+                                            tuttime="> 2 mins with a tutor",
+                                            exampletext="Some examples of quick questions:\n"
+                                                        "  \u2022 Syntax errors\n"
+                                                        "  \u2022 Interpreting error output\n"
+                                                        "  \u2022 Assignment/MyPyTutor interpretation\n"
+                                                        "  \u2022 MyPyTutor submission issues",
+                                            reqbuttonborder="#4cae4c",
+                                            reqbuttontxt="Request Quick Help",
+                                            reqbuttonbg="#5cb85c"
+                                            )
+        self._quickquestions.pack()
+        self._longquestions = RequestPanel(self._mainscreen,
+                                           title="Long Questions",
+                                           titlebg="#d9edf7",
+                                           titleborder="#bce8f1",
+                                           titlefg="#31708f",
+                                           tuttime="< 2 mins with a tutor",
+                                           exampletext="Some examples of long questions:\n"
+                                                       "  \u2022 Open ended questions\n"
+                                                       "  \u2022 How to start a problem\n"
+                                                       "  \u2022 How to improve code\n"
+                                                       "  \u2022 Assignment Help",
+                                           reqbuttonborder="#46b8da",
+                                           reqbuttontxt="Request Long Help",
+                                           reqbuttonbg="#5bc0de"
+                                           )
+        self._longquestions.pack()
 
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.configure(background="#fff")
     app = MainApplication(root)
     root.mainloop()
